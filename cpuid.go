@@ -4,13 +4,7 @@ package cpuid
 
 /*
 #include <string.h>
-enum
-{
-	EAX = 0,
-	EBX = 1,
-	ECX = 2,
-	EDX = 3
-};
+
 void cpuid( unsigned op, unsigned* regs )
 {
 	unsigned eax, ebx, ecx, edx;
@@ -49,7 +43,7 @@ unsigned cpuid_max_extended_function(void)
 {
 	unsigned reg[4];
 	cpuid(0x80000000, reg);
-	return reg[EAX];
+	return reg[0];
 }
 
 void cpu_brand_name( char* name )
@@ -68,16 +62,6 @@ void cpu_brand_name( char* name )
 	{
 		strcpy( name, "unknown" );
 	}
-}
-const char* arch(void)
-{
-#ifdef __x86_64__
-	return "x64";
-#elif defined(__i386)
-	return "x86";
-#else
-	return "other";
-#endif
 }
 */
 import "C"
