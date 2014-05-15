@@ -1,4 +1,3 @@
-
 package main
 
 import "fmt"
@@ -15,15 +14,15 @@ func main() {
 	fmt.Printf("Intel = %d\n", cpuid.Intel)
 	fmt.Printf("AMD   = %d\n", cpuid.AMD)
 	fmt.Printf("Other = %d\n", cpuid.Other)
-	
+
 	fmt.Print("cpu vendor        = ")
 	switch cpuid.VendorId() {
-		case cpuid.Intel:
-			fmt.Println("Intel")
-		case cpuid.AMD:
-			fmt.Println("AMD")
-		default:
-			fmt.Println("Unknown")
+	case cpuid.Intel:
+		fmt.Println("Intel")
+	case cpuid.AMD:
+		fmt.Println("AMD")
+	default:
+		fmt.Println("Unknown")
 	}
 	fmt.Printf("cpu brand name    = %s\n", cpuid.BrandName())
 

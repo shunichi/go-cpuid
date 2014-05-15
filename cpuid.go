@@ -14,7 +14,7 @@ enum
 void cpuid( unsigned op, unsigned* regs )
 {
 	unsigned eax, ebx, ecx, edx;
-	asm volatile( 
+	asm volatile(
 		"pushl %%ebx   \n\t"
 	    "cpuid         \n\t"
 	    "movl %%ebx, %1\n\t"
@@ -31,7 +31,7 @@ void cpuid( unsigned op, unsigned* regs )
 void cpuidex( unsigned op, unsigned op2, unsigned* regs )
 {
 	unsigned eax, ebx, ecx, edx;
-	asm volatile( 
+	asm volatile(
 		"pushl %%ebx   \n\t"
 	    "cpuid         \n\t"
 	    "movl %%ebx, %1\n\t"
@@ -49,7 +49,7 @@ unsigned cpuid_max_extended_function(void)
 {
 	unsigned reg[4];
 	cpuid(0x80000000, reg);
-	return reg[EAX];	
+	return reg[EAX];
 }
 
 void cpu_brand_name( char* name )
@@ -61,7 +61,7 @@ void cpu_brand_name( char* name )
 		for( i = 0; i < 3u; ++i )
 		{
 			cpuid( 0x80000002 + i, regs );
-			memcpy( name + i * 16, regs, 16 );	
+			memcpy( name + i * 16, regs, 16 );
 		}
 	}
 	else
@@ -119,8 +119,8 @@ func VendorId() int {
 	}
 }
 
-func BrandName() string {	
-	var nameBuf [64]C.char;
+func BrandName() string {
+	var nameBuf [64]C.char
 	C.cpu_brand_name(&nameBuf[0])
 	return C.GoString(&nameBuf[0])
 }
@@ -141,7 +141,7 @@ func LogicalCore() int {
 	case Intel:
 		if MaxFunctionId() < 0xb {
 			return 1
-		}	
+		}
 		C.cpuidex(0xb, 1, &regs[0])
 		return int(regs[1]) & 0xffff
 	case AMD:
@@ -155,7 +155,7 @@ func LogicalCore() int {
 func PhysicalCore() int {
 	switch VendorId() {
 	case Intel:
-		return LogicalCore()/ThreadPerCore()
+		return LogicalCore() / ThreadPerCore()
 	case AMD:
 		var regs [4]C.unsigned
 		C.cpuid(0x80000008, &regs[0])
@@ -166,13 +166,13 @@ func PhysicalCore() int {
 }
 
 func MaxFunctionId() uint32 {
-	var regs [4]C.unsigned;
+	var regs [4]C.unsigned
 	C.cpuid(0, &regs[0])
-	return uint32(regs[0]);
+	return uint32(regs[0])
 }
 
 func MaxExtendedFunctionId() uint32 {
-	var regs [4]C.unsigned;
+	var regs [4]C.unsigned
 	C.cpuid(0x80000000, &regs[0])
-	return uint32(regs[0]);
+	return uint32(regs[0])
 }
