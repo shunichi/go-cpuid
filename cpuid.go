@@ -66,6 +66,10 @@ void cpu_brand_name( char* name )
 */
 import "C"
 
+/*
+	https://github.com/MetaScale/nt2/blob/a1ede0dc54a332dcc265e1cfed267d4b4a57e019/tools/is_multicore/is_multicore.cpp
+*/
+
 const (
 	Intel = iota
 	AMD
@@ -109,7 +113,7 @@ func BrandName() string {
 	return C.GoString(&nameBuf[0])
 }
 
-func ThreadPerCore() int {
+func ThreadsPerCore() int {
 	if MaxFunctionId() < 0xb {
 		return 1
 	}
@@ -119,7 +123,7 @@ func ThreadPerCore() int {
 	return int(regs[1]) & 0xffff
 }
 
-func LogicalCore() int {
+func LogicalCores() int {
 	var regs [4]C.unsigned
 	switch VendorId() {
 	case Intel:
@@ -136,10 +140,10 @@ func LogicalCore() int {
 	}
 }
 
-func PhysicalCore() int {
+func PhysicalCores() int {
 	switch VendorId() {
 	case Intel:
-		return LogicalCore() / ThreadPerCore()
+		return LogicalCores() / ThreadsPerCore()
 	case AMD:
 		var regs [4]C.unsigned
 		C.cpuid(0x80000008, &regs[0])
