@@ -1,7 +1,7 @@
 package main
 
 import "fmt"
-import "github.com/shunichi/cpuid"
+import "github.com/shunichi/go-cpuid"
 
 func main() {
 	fmt.Print("cpu vendor        = ")
@@ -13,11 +13,12 @@ func main() {
 	default:
 		fmt.Println("Unknown")
 	}
-	fmt.Printf("cpu brand name    = %s\n", cpuid.BrandName())
+	fmt.Printf("cpu brand name       = %s\n", cpuid.BrandName())
 
-	fmt.Printf("max func          = %08x\n", cpuid.MaxFunctionId())
-	fmt.Printf("max extended func = %08x\n", cpuid.MaxExtendedFunctionId())
+	fmt.Printf("max func id          = %08x\n", cpuid.MaxFunctionId())
+	fmt.Printf("max extended func id = %08x\n", cpuid.MaxExtendedFunctionId())
 
-	fmt.Printf("cpu physical core = %d\n", cpuid.PhysicalCore())
-	fmt.Printf("cpu logical core  = %d\n", cpuid.LogicalCore())
+	fmt.Printf("cpu physical cores   = %d\n", cpuid.PhysicalCores())
+	fmt.Printf("cpu logical cores    = %d\n", cpuid.LogicalCores())
+	fmt.Printf("threads / core       = %d\n", cpuid.ThreadsPerCore())
 }
